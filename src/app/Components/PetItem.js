@@ -2,17 +2,31 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import PetsList from "./PetsList";
+import Pets from "./PetsList";
 
 const btnStyle =
   "m-4 p-2 bg-palette-primary text-white rounded-sm font-primary font-semibold  hover:bg-palette-dark";
 
 function PetItem({ pet }) {
   let [image, setImage] = useState(pet.image);
+  const [adopt, setAdopt] = useState(false);
 
   function currentImage() {
     setImage(image === pet.image ? pet.image2 : pet.image);
   }
+
+  //<============= Adoption ================>
+
+  function handelAdopt() {
+    if (confirm("do you want to adopt")) {
+      setAdopt(true);
+      ("you pressed Adopt");
+    } else {
+      setAdopt(false);
+      ("you pressed cancel");
+    }
+  }
+  if (adopt) return null;
 
   return (
     <div className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter">
@@ -36,7 +50,7 @@ function PetItem({ pet }) {
           <button onClick={currentImage} type="button" className={btnStyle}>
             Pet
           </button>
-          <button type="button" className={btnStyle}>
+          <button type="button" className={btnStyle} onClick={handelAdopt}>
             Adopt
           </button>
         </div>
